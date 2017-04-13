@@ -1,0 +1,5 @@
+syntax-check:
+    script:
+        - "find . -name '*.php' -print0 | xargs -0 -n1 php -l"
+    tags:
+        - shared-php56
