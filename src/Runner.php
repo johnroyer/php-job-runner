@@ -2,6 +2,8 @@
 
 namespace JobRunner;
 
+use JobRunner\AbstractJob;
+
 class Runner implements \SplSubject
 {
     /** @var array time (in 24h format) as key, job ID as value */
@@ -41,11 +43,14 @@ class Runner implements \SplSubject
     public function attach(\SplObserver $job)
     {
         // check if job ID is unique
-        if (in_array($job->getId, array_keys($this->timeMap))) {
+        if (in_array($job->getId(), array_keys($this->timeMap))) {
             throw  new \UnexpectedValueException(
                 'Duplicated job ID. Job ID should be unique.'
             );
         }
+
+        $this->pushSchedule($job);
+        $this->updateTimeMap($job);
     }
 
     /**
@@ -66,7 +71,7 @@ class Runner implements \SplSubject
 
     private function updateTimeMap($job)
     {
-        $this->timeMap[$job->getId] = $job->getRunTime();
+        $this->timeMap[$job->getId()] = $job->getRunTime();
     }
 
     /**
@@ -80,7 +85,7 @@ class Runner implements \SplSubject
 
         foreach ($this->schedule as $time => $jobs) {
             foreach ($jobs as $job) {
-                $list[$time][] = $job->getId;
+                $list[$time][] = $job->getId();
             }
         }
 
@@ -89,9 +94,19 @@ class Runner implements \SplSubject
 
     public function detach(\SplObserver $job)
     {
+        throw new \Exception('not implement yet');
     }
 
     public function notify()
     {
+        $time = $this->currTime->format('H:i');
+
+        if (!array_key_exists($time, $this->schedule)) {
+            return;
+        }
+
+        foreach ($this->schedule[$time] as $job) {
+            $job->update($this);
+        }
     }
 }
