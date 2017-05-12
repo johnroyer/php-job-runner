@@ -12,6 +12,11 @@ class Cleanner extends \JobRunner\AbstractJob
 {
     private $jobId = 'clean-outdated-backup';
     private $runTime = '03:00';
+
+    public function update(\SplSubject $runner)
+    {
+        // clean outdated backups
+    }
 }
 ```
 
