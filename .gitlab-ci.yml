@@ -1,0 +1,12 @@
+syntax-check:
+    script:
+        - "find . -name '*.php' -print0 | xargs -0 -n1 php -l"
+    tags:
+        - shared-php56
+
+unit-test:
+    script:
+        - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+        - ./vendor/phpunit/phpunit/phpunit --testsuite ci-runner -v --coverage-text --colors=never --stderr
+    tags:
+        - shared-php56
