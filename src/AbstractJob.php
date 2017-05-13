@@ -5,10 +5,10 @@ namespace JobRunner;
 abstract class AbstractJob implements \SplObserver
 {
     /** @var string unique ID of job */
-    private $jobId = '';
+    protected $jobId = '';
 
     /** @var string run time in 24H format */
-    private $runTime = '';
+    protected $runTime = '';
 
     public function getId()
     {

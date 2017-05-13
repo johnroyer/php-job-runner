@@ -11,7 +11,7 @@
 
     <testsuites>
         <testsuite name="basic">
-            <directory>./tests/</directory>
+            <directory suffix="Test.php">tests/src/</directory>
         </testsuite>
     </testsuites>
 
@@ -24,4 +24,8 @@
             <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
+
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+    </logging>
 </phpunit>

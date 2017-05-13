@@ -7,25 +7,9 @@ use JobRunner\Runner;
 
 class RunnerTest extends TestCase
 {
+    use \JobRunner\Test\FakeJobTrait;
+
     private $runner = null;
-
-    public function getFakeJob($id, $runTime)
-    {
-        $job = \Mockery::mock(\JobRunner\AbstractJob::class.'[getId,getRunTime]');
-
-        $job->shouldReceive('getId')
-            ->andReturn($id);
-
-        $job->shouldReceive('getRunTime')
-            ->andReturn($runTime);
-
-        $runner = null;
-        $job->shouldReceive('update')
-            ->with($runner)
-            ->andReturn($runner);
-
-        return $job;
-    }
 
     public function setUp()
     {
@@ -97,5 +81,37 @@ class RunnerTest extends TestCase
         $this->runner->attach($job);
 
         $this->runner->notify();
+    }
+
+    public function testRunnerTriggerNothing()
+    {
+        $this->runner->notify();
+    }
+
+    public function testAttachOneJob()
+    {
+        $job = $this->getFakeJob('job', '12:00');
+
+        $this->runner->attach($job);
+    }
+
+    /**
+     * @expectedException \UnexpectedValueException
+     */
+    public function testAttachJobsWithDuplicateID()
+    {
+        $job = $this->getFakeJob('job', '12:00');
+
+        $this->runner->attach($job);
+        $this->runner->attach($job);
+    }
+
+    public function testAttachDiferentJobsExecuteInSameTime()
+    {
+        $job = $this->getFakeJob('foo', '12:00');
+        $job2 = $this->getFakeJob('bar', '12:00');
+
+        $this->runner->attach($job);
+        $this->runner->attach($job2);
     }
 }
