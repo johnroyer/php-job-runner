@@ -1,0 +1,13 @@
+#!/usr/bin/php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$runner = new \JobRunner\Runner();
+
+// attach jobs here
+$runner->attach(new \Routine\Job\CleanCache);
+$runner->attach(new \Routine\Job\SysMonnitor);
+
+// ask runner to check if there are jobs need to execute
+$runner->notify();

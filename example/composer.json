@@ -1,0 +1,20 @@
+{
+    "name": "johnroyer/job-runner-example",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zero",
+            "email": "john.royer@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "johnroyer/php-job-runner": "^0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Routine\\": "src/"
+        }
+    }
+}
