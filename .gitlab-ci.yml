@@ -7,6 +7,6 @@ syntax-check:
 unit-test:
     script:
         - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
-        - ./vendor/phpunit/phpunit/phpunit --testsuite ci-runner -v --coverage-text --colors=never --stderr
+        - ./vendor/phpunit/phpunit/phpunit --colors=never --stderr
     tags:
         - shared-php56
