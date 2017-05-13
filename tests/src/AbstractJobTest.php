@@ -3,19 +3,14 @@
 namespace JobRunner\Test;
 
 use PHPUnit\Framework\TestCase;
-use JobRunner\AbstractJob;
 
-abstract class AbstractJobTest extends TestCase
+class AbstractJobTest extends TestCase
 {
-    /** @var \JobRunner\AbstractJob job instance */
     private $job;
 
-    /** @var \ReflectionClass class reflection for testing */
-    private $refc;
-
-    public function setUp($jobName)
+    public function setUp()
     {
-        $this->job = new $jobName();
+        $this->job = new \JobRunner\Test\Fixture\DummyJob;
     }
 
     public function tearDown()
@@ -23,44 +18,21 @@ abstract class AbstractJobTest extends TestCase
         $this->job = null;
     }
 
-    public function testJobIdIsString()
+    public function testJobIdGetter()
     {
-        $refc = new \ReflectionClass($this->job);
-        $id = $refc->getProperty('jobId');
-        $id->setAccessible(true);
-
         $this->assertSame(
-            true,
-            is_string($id->getValue()),
-            'job ID shoud be string'
+            'my-job',
+            $this->job->getId(),
+            'failed to get job ID'
         );
     }
 
-    public function testRunTimeIsString()
+    public function testRunTimeGetter()
     {
-        $refc = new \ReflectionClass($this->job);
-        $id = $refc->getProperty('runTime');
-        $id->setAccessible(true);
-
         $this->assertSame(
-            true,
-            is_string($id->getValue()),
-            'runTime shoud be string'
-        );
-
-        return $id->getValue();
-    }
-
-    /**
-     * @depends testRunTimeIsString
-     */
-    public function testRuntTimeFormatIsCorrect($runTime)
-    {
-        // run time should present in 24H format
-        $this->assertSame(
-            1,
-            preg_match('/[\d]{2}:[\d]{2}/', $runTime),
-            'runTime should use 24H format'
+            '12:00',
+            $this->job->getRunTime(),
+            'failed to get run time'
         );
     }
 }

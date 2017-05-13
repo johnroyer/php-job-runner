@@ -4,9 +4,9 @@ namespace JobRunner\Test\Fixture;
 
 class DummyJob extends \JobRunner\AbstractJob
 {
-    private $jobId = 'my-job';
+    protected $jobId = 'my-job';
 
-    private $runTime = '12:00';
+    protected $runTime = '12:00';
 
     public function update(\SplSubject $runner)
     {
