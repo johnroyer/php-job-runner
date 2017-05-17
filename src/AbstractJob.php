@@ -2,6 +2,8 @@
 
 namespace JobRunner;
 
+use \Cron\CronExpression as CronExp;
+
 abstract class AbstractJob implements \SplObserver
 {
     /** @var string unique ID of job */
@@ -22,8 +24,23 @@ abstract class AbstractJob implements \SplObserver
         return $this->jobId;
     }
 
+    private function initCron()
+    {
+        if (null !== $this->cron) {
+            return;
+        }
+
+        // do NOT catch exception.
+        // exception should be fixed before push to production
+        $this->cron = CronExp::factory($this->runTime);
+    }
+
     public function getRunTime()
     {
-        return $this->runTime;
+        $this->initCron();
+
+        return $this->cron
+            ->getNextRunDate()
+            ->format('Y/m/d H:i');
     }
 }
