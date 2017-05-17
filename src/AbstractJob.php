@@ -35,12 +35,12 @@ abstract class AbstractJob implements \SplObserver
         $this->cron = CronExp::factory($this->runTime);
     }
 
-    public function getRunTime()
+    public function getRunTime(\DateTimeImmutable $currTime)
     {
         $this->initCron();
 
         return $this->cron
-            ->getNextRunDate()
+            ->getNextRunDate($currTime->format('Y/m/d H:i'))
             ->format('Y/m/d H:i');
     }
 }
