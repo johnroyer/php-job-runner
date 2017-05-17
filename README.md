@@ -44,6 +44,7 @@ $ crontab -e
 
 there is something to improvent:
 
+- job logger / notifier
 - support jobs run only once in a week
 - job which will block / conflict other jobs
 - better time / routine descreption
