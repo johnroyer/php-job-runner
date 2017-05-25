@@ -60,7 +60,7 @@ class Runner implements \SplSubject
      */
     private function pushSchedule($job)
     {
-        $runTime = $job->getRunTime();
+        $runTime = $job->getRunTime($this->currTime);
 
         if (array_key_exists($runTime, $this->schedule)) {
             $this->schedule = [$runTime => $job];
@@ -71,7 +71,7 @@ class Runner implements \SplSubject
 
     private function updateTimeMap($job)
     {
-        $this->timeMap[$job->getId()] = $job->getRunTime();
+        $this->timeMap[$job->getId()] = $job->getRunTime($this->currTime);
     }
 
     /**

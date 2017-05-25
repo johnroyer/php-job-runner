@@ -114,4 +114,13 @@ class RunnerTest extends TestCase
         $this->runner->attach($job);
         $this->runner->attach($job2);
     }
+
+    /**
+     * @expectedException \Exception
+     */
+    public function testDetach() {
+        $job = $this->getFakeJob('job', '00:00');
+
+        $this->runner->detach($job);
+    }
 }

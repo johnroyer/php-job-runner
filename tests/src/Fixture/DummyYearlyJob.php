@@ -2,11 +2,11 @@
 
 namespace JobRunner\Test\Fixture;
 
-class DummyJob extends \JobRunner\AbstractJob
+class DummyYearlyJob extends \JobRunner\AbstractJob
 {
     protected $jobId = 'my-job';
 
-    protected $runTime = '12:00';
+    protected $runTime = '0 0 1 1 *';
 
     public function update(\SplSubject $runner)
     {

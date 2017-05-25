@@ -10,7 +10,7 @@ class AbstractJobTest extends TestCase
 
     public function setUp()
     {
-        $this->job = new \JobRunner\Test\Fixture\DummyJob;
+        $this->job = new \JobRunner\Test\Fixture\DummyYearlyJob;
     }
 
     public function tearDown()
@@ -29,9 +29,23 @@ class AbstractJobTest extends TestCase
 
     public function testRunTimeGetter()
     {
+        $res = preg_match('/01\/01 00:00/', $this->job->getRunTime(new \DateTimeImmutable('5566/1/1 00:00')));
+
         $this->assertSame(
-            '12:00',
-            $this->job->getRunTime(),
+            1,
+            $res,
+            'failed to get run time'
+        );
+    }
+
+    public function testCronInitilizer()
+    {
+        $this->job->getRunTime(new \DateTimeImmutable('5566/1/1 00:00'));
+        $res = preg_match('/01\/01 00:00/', $this->job->getRunTime(new \DateTimeImmutable('5566/1/1 00:00')));
+
+        $this->assertSame(
+            1,
+            $res,
             'failed to get run time'
         );
     }
