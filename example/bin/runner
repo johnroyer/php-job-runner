@@ -3,11 +3,11 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$runner = new \JobRunner\Runner();
+$runner = new \JobRunner\Runner(new \DateTimeImmutable);
 
 // attach jobs here
 $runner->attach(new \Routine\Job\CleanCache);
-$runner->attach(new \Routine\Job\SysMonnitor);
+$runner->attach(new \Routine\Job\SysMonitor);
 
 // ask runner to check if there are jobs need to execute
 $runner->notify();

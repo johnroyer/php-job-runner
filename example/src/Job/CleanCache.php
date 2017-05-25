@@ -4,9 +4,9 @@ namespace Routine\Job;
 
 class CleanCache extends \JobRunner\AbstractJob
 {
-    private $jobId = 'clean-cache';
+    protected $jobId = 'clean-cache';
 
-    private $runTime = '03:00';
+    protected $runTime = '0 3 * * *';
 
     public function update(\SplSubject $runner)
     {

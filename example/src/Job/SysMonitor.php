@@ -4,9 +4,9 @@ namespace Routine\Job;
 
 class SysMonitor extends \JobRunner\AbstractJob
 {
-    private $jobId = 'sys-monitor';
+    protected $jobId = 'sys-monitor';
     
-    private $runTime = '21:00';
+    protected $runTime = '0 21 * * *';
 
     public function update(\SplSubject $runner)
     {
