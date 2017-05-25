@@ -11,7 +11,7 @@ Create a job extends from `AbstractJob`:
 class Cleanner extends \JobRunner\AbstractJob
 {
     private $jobId = 'clean-outdated-backup';
-    private $runTime = '03:00';
+    private $runTime = '0 3 * * *';
 
     public function update(\SplSubject $runner)
     {
@@ -48,3 +48,7 @@ there is something to improvent:
 - support jobs run only once in a week
 - job which will block / conflict other jobs
 - better time / routine descreption
+
+# License
+
+- MIT license
